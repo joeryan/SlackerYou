@@ -1,17 +1,35 @@
 const feathers = require('@feathersjs/feathers');
-var bodyParser = require('body-parser');
-var db = require('feathers-nedb');
+const express = require('@feathersjs/express');
+const socketio = require('@feathersjs/socketio');
+const NeDB = require('nedb');
+const bodyParser = require('body-parser');
+const service = require('feathers-nedb');
 
-var app = feathers()
+const db = new NeDB({
+  filename: './data/messages.db',
+  autoload: true
+});
+
+const port = 3030;
+
+var app = express(feathers())
   // Configure REST and real-time capabilities
-  .configure(feathers.rest())
-  .configure(feathers.socketio())
+  .configure(express.rest())
+  .configure(socketio())
   // Setup REST endpoints to parse json
   .use(bodyParser.json())
   // add a messages API endpoint
-  .use('/messages', db(messages))
+  .use('/messages', service({ Model: db }))
   // Host the current folder static content
-  .use('/', feathers.static(__dirname));
+  .use('/', express.static(__dirname))
+  .use(express.errorHandler())
+  .use(express.urlencoded({ extended: true }));
 
-app.listen(3030);
+//app.service('messages').create({
+//  text: 'Message created on server'
+//  }).then(message => console.log('Created message', message));
+
+app.listen(port, () => {
+  console.log(`Feathers server listening on port ${port}`);
+  });
 

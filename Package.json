@@ -1,0 +1,27 @@
+{
+  "name": "slackeryou",
+  "version": "1.0.0",
+  "description": "simple real time chat app in feathers",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeryan/SlackerYou.git"
+  },
+  "author": "Joe Ryan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joeryan/SlackerYou/issues"
+  },
+  "homepage": "https://github.com/joeryan/SlackerYou#readme",
+  "dependencies": {
+    "@feathersjs/express": "^1.2.7",
+    "@feathersjs/feathers": "^3.2.3",
+    "@feathersjs/socketio": "^3.2.7",
+    "body-parser": "^1.18.3",
+    "feathers-nedb": "^3.1.0",
+    "nedb": "^1.8.0"
+  }
+}
