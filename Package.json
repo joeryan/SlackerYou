@@ -1,6 +1,6 @@
 {
   "name": "slackeryou",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simple real time chat app in feathers",
   "main": "app.js",
   "scripts": {
