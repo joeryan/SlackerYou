@@ -10,7 +10,7 @@ const db = new NeDB({
   autoload: true
 });
 
-const port = 3030;
+var port = process.env.PORT || 3030;
 
 var app = express(feathers())
   // Configure REST and real-time capabilities
@@ -24,6 +24,26 @@ var app = express(feathers())
   .use('/', express.static(__dirname))
   .use(express.errorHandler())
   .use(express.urlencoded({ extended: true }));
+
+app.service('messages').hooks({
+  before: {
+    create (context) {
+        context.data.createdAt = new Date();
+        return context;
+    },
+    find (context) {
+      context.params.query.$sort = { createdAt: 1 };
+      return context;
+    }
+  },
+  after: {
+    find (context) {
+      var size = context.result.length;
+      context.result = context.result.slice(size - 10, size)
+      return context;
+    }
+  }
+});
 
 //app.service('messages').create({
 //  text: 'Message created on server'
