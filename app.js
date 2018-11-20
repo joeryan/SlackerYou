@@ -39,6 +39,7 @@ app.service('messages').hooks({
   after: {
     find (context) {
       var size = context.result.length;
+      if (size < 10) { size = 10; }
       context.result = context.result.slice(size - 10, size)
       return context;
     }
